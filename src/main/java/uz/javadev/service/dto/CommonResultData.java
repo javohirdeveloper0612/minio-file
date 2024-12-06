@@ -1,4 +1,4 @@
-package uz.retail.core.service.dto;
+package uz.javadev.service.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +17,6 @@ public class CommonResultData<T> implements Serializable {
     private T data;
 
     public CommonResultData(T data) {
-//        super(SUCCESS);
         this.data = data;
     }
 

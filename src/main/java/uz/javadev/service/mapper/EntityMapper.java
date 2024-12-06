@@ -1,4 +1,4 @@
-package uz.retail.core.service.mapper;
+package uz.javadev.service.mapper;
 
 import org.mapstruct.*;
 

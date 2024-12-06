@@ -1,10 +1,18 @@
 package uz.javadev.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 import java.util.UUID;
 
+@Builder
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "file")
 public class FileEntity {
@@ -27,6 +35,6 @@ public class FileEntity {
     @Column(name = "extension")
     private String extension;
 
-    @Column(name = "createdDate")
+    @Column(name = "created_date", updatable = false)
     private Instant createdDate;
 }

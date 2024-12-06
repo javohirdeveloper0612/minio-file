@@ -1,4 +1,4 @@
-package uz.retail.core.config;
+package uz.javadev.config;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.pattern.CompositeConverter;
@@ -14,12 +14,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Log filter to prevent attackers from forging log entries by submitting input containing CRLF characters.
- * CRLF characters are replaced with a red colored _ character.
- *
- * @see <a href="https://owasp.org/www-community/attacks/Log_Injection">Log Forging Description</a>
- */
 public class CRLFLogConverter extends CompositeConverter<ILoggingEvent> {
 
     public static final Marker CRLF_SAFE_MARKER = MarkerFactory.getMarker("CRLF_SAFE");

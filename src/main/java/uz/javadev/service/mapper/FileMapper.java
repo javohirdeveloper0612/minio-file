@@ -1,9 +1,9 @@
-package uz.retail.core.service.mapper;
+package uz.javadev.service.mapper;
 
 import org.mapstruct.Mapper;
-import uz.retail.core.domain.FileManagement;
-import uz.retail.core.service.dto.FileManagementDTO;
+import uz.javadev.domain.FileEntity;
+import uz.javadev.service.dto.FileDto;
 
 @Mapper(componentModel = "spring")
-public interface FileManagementMapper extends EntityMapper<FileManagementDTO, FileManagement> {
+public interface FileMapper extends EntityMapper<FileDto, FileEntity> {
 }
