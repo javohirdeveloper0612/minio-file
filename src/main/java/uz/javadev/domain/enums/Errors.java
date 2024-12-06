@@ -1,8 +1,9 @@
-package uz.retail.core.domain.enumeration;
+package uz.javadev.domain.enums;
 
-import uz.isd.commons.result.HasResult;
+import lombok.Getter;
 
-public enum Errors implements HasResult {
+@Getter
+public enum Errors {
     FILE_NOT_FOUND(-400, "FILE NOT FOUND"),
     TEMPLATE_ALREADY_EXIST(-1000, "TEMPLATE WITH THIS NAME ALREADY EXISTS"),
     FILE_UPLOAD_FAIL(-1001, "FILE COULD NOT BE UPLOADED"),
@@ -11,8 +12,7 @@ public enum Errors implements HasResult {
     SERVICE_NOT_IMPLEMENTED(10021, "SERVICE NOT IMPLEMENTED"),
     UNSUPPORTED_TEMPLATE_FILE(-1004, "UNSUPPORTED CONTENT TYPE"),
     INVALID_REQUEST(-1005, "INVALID REQUEST"),
-    FILE_DELETE_FAIL(-1005,"FILE_DELETE_FAIL")
-    ;
+    FILE_DELETE_FAIL(-1005,"FILE DELETE FAIL");
 
     private final String message;
     private final Integer code;
@@ -22,20 +22,4 @@ public enum Errors implements HasResult {
         this.code = code;
     }
 
-
-    @Override
-    public Integer getCode() {
-        return this.code;
     }
-
-    @Override
-    public Object getDetails() {
-        return null;
-    }
-
-    @Override
-    public String getMessage() {
-        return this.message;
-    }
-
-}

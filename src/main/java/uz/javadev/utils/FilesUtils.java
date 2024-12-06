@@ -1,11 +1,8 @@
-package uz.retail.core.utils;
+package uz.javadev.utils;
 
-import com.google.common.io.ByteStreams;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.time.LocalDate;
 
 import static java.time.format.DateTimeFormatter.ofPattern;
@@ -13,15 +10,6 @@ import static java.time.format.DateTimeFormatter.ofPattern;
 @UtilityClass
 @Slf4j
 public class FilesUtils {
-
-    public static byte[] toByteArray(InputStream response) {
-        try (InputStream is = response) {
-            return ByteStreams.toByteArray(is);
-        } catch (IOException e) {
-            log.error("Cannot convert to byte array -> {}", e.getMessage());
-            throw new RuntimeException(e);
-        }
-    }
 
     public static String createPath(String fileName) {
         var date = LocalDate.now().format(ofPattern("yyyy/MM/dd"));
@@ -40,11 +28,13 @@ public class FilesUtils {
         };
     }
 
+    public static String sanitizeFileName(String fileName) {
+        return fileName.replaceAll("[^a-zA-Z0-9._-]", "_");
+    }
 
     public static String getFileName(String originalName) {
         return System.currentTimeMillis() + originalName;
     }
-
 
     public static String getExtension(String fileName) {
         if (fileName == null || fileName.isEmpty())

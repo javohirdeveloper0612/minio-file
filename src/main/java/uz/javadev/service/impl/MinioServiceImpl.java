@@ -1,4 +1,4 @@
-package uz.javadev.service;
+package uz.javadev.service.impl;
 
 import io.minio.*;
 import lombok.RequiredArgsConstructor;
@@ -6,22 +6,21 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import uz.javadev.exp.FileException;
+import uz.javadev.service.MinioService;
 
 import static uz.javadev.domain.enums.Errors.*;
 
 /**
- * This class abstracts common operations for working with MinIO, allowing
- * for easy management of files such as uploading, downloading, and deleting files.
- *
  * @author Javohir Yallayev
  */
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class MinioServiceImpl{
+public class MinioServiceImpl implements MinioService {
 
     private final MinioClient minioClient;
 
+    @Override
     public GenericResponse uploadFile(MultipartFile file, String bucketName, String path) {
         try {
             return minioClient.putObject(
@@ -37,6 +36,7 @@ public class MinioServiceImpl{
         }
     }
 
+    @Override
     public GetObjectResponse downloadFile(String fileName, String bucketName) {
         try {
             return minioClient.getObject(GetObjectArgs.builder()
@@ -45,6 +45,21 @@ public class MinioServiceImpl{
                     .build());
         } catch (Exception e) {
             throw new FileException(FILE_DOWNLOAD_FAIL);
+        }
+    }
+
+    @Override
+    public void deleteFile(String bucketName, String path) {
+        try {
+            minioClient.removeObject(
+                    RemoveObjectArgs.builder()
+                            .bucket(checkBucketName(bucketName))
+                            .object(path)
+                            .build());
+            log.info("File deleted successfully from MINIO: {}/{}", bucketName, path);
+        } catch (Exception e) {
+            log.error("Cannot delete file from MINIO -> {}", e.getMessage());
+            throw new FileException(FILE_DELETE_FAIL);
         }
     }
 
@@ -60,20 +75,4 @@ public class MinioServiceImpl{
             throw new FileException(INVALID_BUCKET_NAME);
         }
     }
-
-
-    public void deleteFile(String bucketName, String path) {
-        try {
-            minioClient.removeObject(
-                    RemoveObjectArgs.builder()
-                            .bucket(checkBucketName(bucketName))
-                            .object(path)
-                            .build());
-            log.info("File deleted successfully from MINIO: {}/{}", bucketName, path);
-        } catch (Exception e) {
-            log.error("Cannot delete file from MINIO -> {}", e.getMessage());
-            throw new FileException(FILE_DELETE_FAIL);
-        }
-    }
-
 }

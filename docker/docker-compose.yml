@@ -1,48 +1,5 @@
 name: erp-retail-module
 services:
-  consul:
-    image: docker.io/bitnami/consul:1.17.0
-    ports:
-      - 127.0.0.1:8300:8300
-      - 127.0.0.1:8500:8500
-      - 127.0.0.1:8600:8600
-    command: consul agent -dev -ui -client 0.0.0.0 -log-level=INFO
-
-  consul-config-loader:
-    image: jhipster/consul-config-loader:v0.4.1
-    volumes:
-      - ./central-server-config:/config
-    environment:
-      - INIT_SLEEP_SECONDS=5
-      - CONSUL_URL=consul
-      - CONSUL_PORT=8500
-
-### ------------------------------------------------------- KEYCLOAK ------------------------------------------------------- ###
-  keycloak:
-    image: quay.io/keycloak/keycloak:23.0.1
-    command: 'start-dev --import-realm'
-    volumes:
-      - ./realm-config:/opt/keycloak/data/import
-      - ./realm-config/keycloak-health-check.sh:/opt/keycloak/health-check.sh
-    environment:
-      - KC_DB=dev-file
-      - KEYCLOAK_ADMIN=admin
-      - KEYCLOAK_ADMIN_PASSWORD=admin
-      - KC_FEATURES=scripts
-      - KC_HTTP_PORT=9080
-      - KC_HTTPS_PORT=9443
-      - KC_HEALTH_ENABLED=true
-    ports:
-      - 127.0.0.1:9080:9080
-      - 127.0.0.1:9443:9443
-    healthcheck:
-      test: 'bash /opt/keycloak/health-check.sh'
-      interval: 5s
-      timeout: 5s
-      retries: 20
-      start_period: 10s
-
-  #--------------------minio----------------------#
   minio:
     image: quay.io/minio/minio
     container_name: minio
@@ -58,24 +15,4 @@ services:
       MINIO_CONSOLE_ADDRESS: ':9001'
     command: minio server /data
 
-
-### ------------------------------------------------------- POSTGRESQL ------------------------------------------------------- ###
-  postgresql:
-    image: postgres:16.1
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=123
-      - POSTGRES_HOST_AUTH_METHOD=trust
-    healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER}']
-      interval: 5s
-      timeout: 5s
-      retries: 10
-    ports:
-      - 127.0.0.1:5432:5432
-
-volumes:
-  postgres_data:
 
