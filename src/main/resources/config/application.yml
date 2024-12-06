@@ -1,0 +1,42 @@
+spring:
+  application:
+    name: ${APPLICATION_NAME}
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}
+    username: ${DATABASE_USER}
+    password: ${DATABASE_PASS}
+    hikari:
+      poolName: CrudExampleHikari
+      auto-commit: false
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  servlet:
+    multipart:
+      max-file-size: 300MB
+      max-request-size: 300MB
+
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui/index.html
+    enabled: true
+  show-actuator: false
+  api-docs:
+    enabled: true
+    path: "/v2/api-docs"
+    version: openapi_3_0
+
+server:
+  port: ${SERVER_PORT}
+
+minio:
+  url: ${MINIO_URL}
+  accessKey: ${ACCESS_KEY}
+  secretKey: ${SECRET_KEY}
