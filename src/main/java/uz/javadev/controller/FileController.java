@@ -35,6 +35,7 @@ public class FileController {
         return service.uploadFile(file, bucketName);
     }
 
+    @Operation(summary = "Download file", description = "This api for download files")
     @GetMapping("/download/{id}")
     public CommonResultData<String> downloadFile(@PathVariable UUID id,
                                                  HttpServletResponse response) {
@@ -42,12 +43,14 @@ public class FileController {
         return service.downloadFile(id, response);
     }
 
+    @Operation(summary = "Preview image", description = "This Api for preview image only images")
     @GetMapping("/preview/{fileId}")
     public void previewPhoto(@PathVariable UUID fileId, HttpServletResponse response) {
         log.info("REQUEST preview file with id {}", fileId);
         service.preview(fileId, response);
     }
 
+    @Operation(summary = "Delete file",description = "This api for delete files")
     @DeleteMapping("/delete/{id}")
     public CommonResultData<String> deleteFile(@PathVariable UUID id) {
         log.info("REQUEST delete file with id {}", id);
