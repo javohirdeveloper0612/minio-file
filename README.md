@@ -31,7 +31,7 @@ This project is a Java Spring Boot application that integrates MinIO, an open-so
 
 ### Prerequisites
 
-- **Java 11** or higher
+- **Java 17** or higher
 - **Maven** for building the project
 - **MinIO Server** running locally or accessible remotely
 
