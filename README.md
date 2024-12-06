@@ -12,7 +12,7 @@ This project is a Java Spring Boot application that integrates MinIO, an open-so
 
 ## Technologies Used
 
-- **Java 11**: Core programming language.
+- **Java 17**: Core programming language.
 - **Spring Boot**: Framework for building the RESTful API.
 - **MinIO**: Object storage system used for storing uploaded files.
 - **Maven**: Dependency management.
